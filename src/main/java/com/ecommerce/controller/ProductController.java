@@ -25,7 +25,7 @@ public class ProductController {
     }
 
     @GetMapping("/{pid}")
-    public ResponseEntity<Product> getProduct(@PathVariable int pid){
+    public ResponseEntity<Product> getProduct(@PathVariable Long pid){
         Product product = productService.getProductById(pid);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }

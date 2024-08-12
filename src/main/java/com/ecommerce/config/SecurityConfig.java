@@ -93,6 +93,8 @@ public class SecurityConfig {
                  .authorizeHttpRequests(auth -> auth
                          .requestMatchers("/product/**").permitAll())
                  .authorizeHttpRequests(auth -> auth
+                         .requestMatchers("/category/**").permitAll())
+                 .authorizeHttpRequests(auth -> auth
                          .anyRequest().authenticated())
                 .exceptionHandling(exp -> exp.authenticationEntryPoint(this.jwtAuthenticationEntryPoint))
                 .sessionManagement(sess -> sess.sessionCreationPolicy(STATELESS))
