@@ -33,9 +33,9 @@ public class CategoryController {
         return new ResponseEntity<>(savedCategory,HttpStatus.CREATED);
     }
 
-//    @GetMapping("/{cid}")
-//    public ResponseEntity<Set<Product>> getAllProductByCid(@PathVariable int cid){
-//        Set<Product> allProduct = categoryService.getAllProductByCategoryId(cid);
-//        return new ResponseEntity<>(allProduct,HttpStatus.OK);
-//    }
+    @PutMapping("update/{cid}")
+    public ResponseEntity<Category> updateCategoryByCid(@PathVariable Long cid, @RequestParam String categoryName){
+        Category updatedCategory = categoryService.updateCategory(cid, categoryName);
+        return new ResponseEntity<>(updatedCategory,HttpStatus.CREATED);
+    }
 }
