@@ -38,4 +38,14 @@ public class CategoryService {
         }
         return category ;
     }
+
+    public void deleteCategory(Long cid){
+        Category category = categoryRepo.findByCid(cid);
+        if(category != null){
+            categoryRepo.delete(category);
+        }
+        else {
+            throw new ResourceNotFoundException("Category","Category Id",cid);
+        }
+    }
 }

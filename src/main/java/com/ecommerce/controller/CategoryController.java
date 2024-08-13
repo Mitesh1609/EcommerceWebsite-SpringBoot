@@ -39,4 +39,10 @@ public class CategoryController {
 
         return new ResponseEntity<>(updatedCategory,HttpStatus.CREATED);
     }
+
+    @DeleteMapping("delete/{cid}")
+    public ResponseEntity<String> updateCategoryByCid(@PathVariable Long cid){
+        categoryService.deleteCategory(cid);
+        return new ResponseEntity<>("Category deleted successfully",HttpStatus.CREATED);
+    }
 }
