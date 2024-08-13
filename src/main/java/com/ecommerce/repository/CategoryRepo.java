@@ -12,7 +12,4 @@ import java.util.List;
 public interface CategoryRepo extends JpaRepository<Category,Integer> {
 
     public Category findByCid(Long cid) ;
-
-//    @Query("SELECT c FROM category c LEFT JOIN FETCH c.product")
-//    public List<Category> findAllWithProducts();
 }

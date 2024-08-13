@@ -6,12 +6,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
 @Entity
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Category {
 
     @Id
@@ -20,15 +22,7 @@ public class Category {
 
     @NotBlank(message = "Category name cannot be blank or null !!")
     @Size(min = 3 , message = "Category name must contain at least 3 characters")
-    private String catName;
+    private String categoryName;
 
-
-//    @OneToMany(mappedBy = "prodCategory", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JsonIgnore
-//    private Set<Product> catProduct;
-
-//    public void addCatProduct(Product prod){
-//        catProduct.add(prod);
-//    }
 }
 

@@ -3,6 +3,7 @@ package com.ecommerce.config;
 import com.ecommerce.JWT.JwtAuthenticationEntryPoint;
 import com.ecommerce.JWT.JwtAuthenticationFilter;
 import com.ecommerce.service.CustomUserDetailService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -61,6 +62,11 @@ public class SecurityConfig {
         FilterRegistrationBean bean = new FilterRegistrationBean<>(new CorsFilter(urlBasedCorsConfigurationSource));
         bean.setOrder(-110);
         return bean;
+    }
+
+    @Bean
+    public ModelMapper getModelMapper(){
+        return new ModelMapper();
     }
 
     @Bean

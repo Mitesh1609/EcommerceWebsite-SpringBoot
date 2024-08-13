@@ -1,9 +1,11 @@
 package com.ecommerce.service;
 
+import com.ecommerce.DTO.CategoryDto;
 import com.ecommerce.entity.Category;
 import com.ecommerce.entity.Product;
 import com.ecommerce.exception.ResourceNotFoundException;
 import com.ecommerce.repository.CategoryRepo;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,27 +18,28 @@ public class CategoryService {
     @Autowired
     private CategoryRepo categoryRepo;
 
-//    public Set<Product> getAllProductByCategoryId(int cid){
-//        return categoryRepo.findByCid(cid).getCatProduct();
-//    }
+    @Autowired
+    private ModelMapper modelMapper;
 
-    public List<Category> getAllCategory(){
-        return categoryRepo.findAll();
+    public List<CategoryDto> getAllCategory(){
+        return categoryRepo.findAll().stream().map((obj) -> modelMapper.map(obj, CategoryDto.class)).toList();
     }
 
-    public Category createNewCategory(Category category){
-        return categoryRepo.save(category);
+    public CategoryDto createNewCategory(CategoryDto categoryDto){
+        Category category = modelMapper.map(categoryDto, Category.class);
+        return modelMapper.map(categoryRepo.save(category), CategoryDto.class);
     }
 
-    public Category updateCategory(Long cid, String categoryName){
+    public CategoryDto updateCategory(Long cid, CategoryDto newCategory){
         Category category = categoryRepo.findByCid(cid);
         if(category != null){
-            category.setCatName(categoryName);
+            category.setCategoryName(newCategory.getCategoryName());
+            categoryRepo.save(category);
         }
         else {
             throw new ResourceNotFoundException("Category","Category Id",cid);
         }
-        return category ;
+        return modelMapper.map(category, CategoryDto.class);
     }
 
     public void deleteCategory(Long cid){

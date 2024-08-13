@@ -1,8 +1,9 @@
 package com.ecommerce.controller;
 
 
+import com.ecommerce.DTO.CategoryDto;
+import com.ecommerce.config.ApiResponse;
 import com.ecommerce.entity.Category;
-import com.ecommerce.entity.Product;
 import com.ecommerce.service.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
+
 
 @Controller
 @RequestMapping("/category")
@@ -22,21 +23,20 @@ public class CategoryController {
     public CategoryService categoryService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Category>> getAllCategory(){
-        List<Category> allCategory = categoryService.getAllCategory();
-        return new ResponseEntity<>(allCategory, HttpStatus.OK);
+    public ResponseEntity<ApiResponse> getAllCategory(){
+        List<CategoryDto> allCategory = categoryService.getAllCategory();
+        return new ResponseEntity<>(new ApiResponse(allCategory), HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category){
-        Category savedCategory = categoryService.createNewCategory(category);
+    public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto category){
+        CategoryDto savedCategory = categoryService.createNewCategory(category);
         return new ResponseEntity<>(savedCategory,HttpStatus.CREATED);
     }
 
     @PutMapping("update/{cid}")
-    public ResponseEntity<Category> updateCategoryByCid(@PathVariable Long cid, @RequestParam String categoryName){
-        Category updatedCategory = categoryService.updateCategory(cid, categoryName);
-
+    public ResponseEntity<CategoryDto> updateCategoryByCid(@PathVariable Long cid, @Valid @RequestBody CategoryDto categoryDto){
+        CategoryDto updatedCategory = categoryService.updateCategory(cid, categoryDto);
         return new ResponseEntity<>(updatedCategory,HttpStatus.CREATED);
     }
 
