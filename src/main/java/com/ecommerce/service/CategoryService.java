@@ -36,6 +36,6 @@ public class CategoryService {
         else {
             throw new ResourceNotFoundException("Category","Category Id",cid);
         }
-        return category;
+        return category ;
     }
 }

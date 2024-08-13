@@ -36,6 +36,7 @@ public class CategoryController {
     @PutMapping("update/{cid}")
     public ResponseEntity<Category> updateCategoryByCid(@PathVariable Long cid, @RequestParam String categoryName){
         Category updatedCategory = categoryService.updateCategory(cid, categoryName);
+
         return new ResponseEntity<>(updatedCategory,HttpStatus.CREATED);
     }
 }
