@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CategoryRepo extends JpaRepository<Category,Integer> {
+public interface CategoryRepo extends JpaRepository<Category,Long> {
 
     public Category findByCid(Long cid) ;
 }

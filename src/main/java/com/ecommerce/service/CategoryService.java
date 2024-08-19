@@ -5,9 +5,15 @@ import com.ecommerce.entity.Category;
 import com.ecommerce.entity.Product;
 import com.ecommerce.exception.ResourceNotFoundException;
 import com.ecommerce.repository.CategoryRepo;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Set;
@@ -21,8 +27,9 @@ public class CategoryService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public List<CategoryDto> getAllCategory(){
-        return categoryRepo.findAll().stream().map((obj) -> modelMapper.map(obj, CategoryDto.class)).toList();
+    public Page<Category> getAllCategory(int pageNumber,int pageSize){
+        Pageable pageable = PageRequest.of(pageNumber,pageSize, Sort.by("categoryName"));
+        return categoryRepo.findAll(pageable);
     }
 
     public CategoryDto createNewCategory(CategoryDto categoryDto){

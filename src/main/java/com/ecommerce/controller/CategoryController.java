@@ -7,6 +7,7 @@ import com.ecommerce.entity.Category;
 import com.ecommerce.service.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,9 +24,16 @@ public class CategoryController {
     public CategoryService categoryService;
 
     @GetMapping("/all")
-    public ResponseEntity<ApiResponse> getAllCategory(){
-        List<CategoryDto> allCategory = categoryService.getAllCategory();
-        return new ResponseEntity<>(new ApiResponse(allCategory), HttpStatus.OK);
+    public ResponseEntity<ApiResponse> getAllCategory(@RequestParam int pageNumber, @RequestParam int pageSize){
+        Page<Category> allCategory = categoryService.getAllCategory(pageNumber,pageSize);
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.setData(allCategory.toList());
+        apiResponse.setLastPage(allCategory.isLast());
+        apiResponse.setCurrentPage(allCategory.getNumber());
+        apiResponse.setTotalPages(allCategory.getTotalPages());
+        apiResponse.setNumberOfElements(allCategory.getNumberOfElements());
+        apiResponse.setTotalElements(allCategory.getTotalElements());
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
     @PostMapping("/create")
