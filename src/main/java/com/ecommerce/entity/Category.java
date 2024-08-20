@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,5 +27,13 @@ public class Category {
     @Column(unique = true)
     private String categoryName;
 
+    @OneToMany(mappedBy = "productCategory")
+    @JsonIgnore
+    private List<Product> products = new ArrayList<>();
+
+    public void setProducts(Product product) {
+        List<Product> prod = this.getProducts();
+        prod.add(product);
+    }
 }
 
