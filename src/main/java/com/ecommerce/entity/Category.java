@@ -35,5 +35,6 @@ public class Category {
         List<Product> prod = this.getProducts();
         prod.add(product);
     }
+
 }
 
